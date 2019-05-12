@@ -8,7 +8,8 @@ const tradeSchema = mongoose.Schema({
         type: String,
         enum: ['SELL','BUY'],
         required: true
-    }
+    },
+    softDelete: {type: Boolean, default: false}
 }, {timestamps: true});
 
 module.exports = mongoose.model('trade', tradeSchema);
