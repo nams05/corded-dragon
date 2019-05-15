@@ -2,29 +2,75 @@
 
 const utils = require('../utils/utils');
 const TradeModel = require('../models/trade.model');
+
 const tradeType = {
     BUY: "BUY",
     SELL: "SELL",
     UPDATE: "UPDATE",
     REMOVE: "REMOVE"
+};
 
-}
 
-exports.update = (request, response) => {
+
+exports.update = (request, response, next) => {
     console.log(request.body);
-    if(!utils.validRequest(request))
-        return response.status(400).send({"success": false}); //add a failure message
+    switch(request.body.transactionType){
+        case "BUY": 
+            const buyTrade = new TradeModel({
+                tradeId: request.body.tradeId,
+                securityId: request.body.securityId,
+                userId: request.body.userId,
+                quantity: request.body.quantity,
+                price: request.body.price,
+                transactionType:  request.body.transactionType
+            });
 
-    const tradeModel = new TradeModel({
-        securityId: 1,
-        userId: 100001,
-        price: 500,
-        transctionType: tradeType.BUY,
+            buyTrade.save(err => {
+                if (err) return response.status(500).send(err);
+                return response.status(200).send(buyTrade);
+            });
+            break;
+
+        case "SELL": 
+            const sellTrade = new TradeModel({
+                tradeId: request.body.tradeId,
+                securityId: request.body.securityId,
+                userId: request.body.userId,
+                quantity: request.body.quantity,
+                price: request.body.price,
+                transactionType:  request.body.transactionType
+            });
+
+            sellTrade.save(err => {
+                if (err) return response.status(500).send(err);
+                return response.status(200).send(sellTrade);
+            });
+            break;
+
+        case "UPDATE": 
+            let updatedTrade = {
+                tradeId: request.body.tradeId,
+                securityId: request.body.securityId,
+                userId: request.body.userId,
+                quantity: request.body.quantity,
+                price: request.body.price
+            };
+            TradeModel.findOneAndUpdate({tradeId: request.body.tradeId },{$set: updatedTrade},{new: true},(err, trade) => {
+                // Handle any possible database errors
+                    if (err) return response.status(500).send(err);
+                    return response.send(trade);
+                });
+            break;
+
+        case "REMOVE": 
+            TradeModel.findOneAndUpdate({tradeId: request.body.tradeId },{$set: {softDelete: true}},{new: true},(err, trade) => {
+                // Handle any possible database errors
+                    if (err) return response.status(500).send(err);
+                    return response.send(trade);
+                });
+            break;
         
-    });
-
-    tradeModel.save();
-
-    return response.status(200).send({"success": true});
-
+        default: return response.status(200).send({"success": true});
+    }
+    
 }

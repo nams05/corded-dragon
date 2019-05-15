@@ -6,4 +6,4 @@ const userSchema = mongoose.Schema({
     trades: [Number]
 }, {timestamps: true});
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('user', userSchema, 'users');
