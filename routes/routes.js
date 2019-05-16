@@ -7,7 +7,7 @@ const utils =  require('../utils/utils');
 module.exports = (app) => {
 
     //create, update and delete a trade
-    app.post('/updateTrade', tradeController.validate('update'), tradeController.update);
+    app.post('/updateTrade', utils.validate('update'), tradeController.update);
 
     //get all securities and trades of a user
     app.get('/fetchPortfolio/:userId', portfolioController.fetchPortfolio);
