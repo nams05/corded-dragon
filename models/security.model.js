@@ -7,4 +7,4 @@ const securitySchema = mongoose.Schema({
     //securityType: {type: String, enum: ['ST', 'BD', 'CUR', 'CSH', 'COM'], required: true}
 }, {timestamps: true});
 
-module.exports = mongoose.model('security', securitySchema, 'security');
+module.exports = mongoose.model('security', securitySchema, 'security'); // creates a collection named security with securitySchema

@@ -6,4 +6,4 @@ const userSchema = mongoose.Schema({
     trades: [Number]
 }, {timestamps: true});
 
-module.exports = mongoose.model('user', userSchema, 'users');
+module.exports = mongoose.model('user', userSchema, 'users');  // create a collection named users with userSchema
