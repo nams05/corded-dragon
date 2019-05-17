@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('../config/config');
+const tradeType = require('../core/tradeType').tradeType;
 
 const tradeSchema = mongoose.Schema({
     tradeId: {type: Number, required: true, unique: true},
@@ -9,7 +10,7 @@ const tradeSchema = mongoose.Schema({
     price: {type: Number, required: true, unique: false, min: config.tickSize},
     transactionType: {
         type: String,
-        enum: ['SELL', 'BUY'],
+        enum: [ tradeType.SELL, tradeType.BUY],
         required: true
     },
     softDelete: {type: Boolean, default: false}

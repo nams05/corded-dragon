@@ -1,11 +1,11 @@
 'use strict'
 
 const mongoose = require('mongoose');
-const PortfolioModel = require('../models/trade.model');
+const TradeModel = require('../models/trade.model');
 const tradeType = require('../core/tradeType');
 
 exports.fetchPortfolio = (request, response) => {
-    PortfolioModel.find().
+   TradeModel.find().
     where('userId').equals(request.params.userId).
     then(userFolio => {
         if(!userFolio || userFolio.length === 0){
@@ -87,7 +87,7 @@ const fetchReturnsHelper = (userPortfolio) => {
 
 exports.fetchHoldings = (request, response) => {
   
-    PortfolioModel.find({}).
+    TradeModel.find({}).
     where('userId').equals(request.params.userId).
     where('softDelete').equals(false).
     sort('-createdAt').
@@ -107,7 +107,7 @@ exports.fetchHoldings = (request, response) => {
 exports.fetchReturns = (request, response) => {
     let returns = 0;
 
-    PortfolioModel.find({}).
+    TradeModel.find({}).
     where('userId').equals(request.params.userId).
     where('softDelete').equals(false).
     sort('-createdAt').

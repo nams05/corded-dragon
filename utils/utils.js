@@ -18,13 +18,9 @@ exports.validate = (method) => {
 exports.validationHandler = next => result => {
     if (result.isEmpty()) return
     if (!next)
-      throw new Error(
-        result.array().map(i => `'${i.param}': ${i.msg}`).join(' ')
-      )
+      return Promise.reject(result.array().map(i => `'${i.param}': ${i.msg}`).join(' '))
   else
     return next(
-      new Error(
-       result.array().map(i => `'${i.param}' : ${i.msg}`).join('')
-      )
+      Promise.reject(result.array().map(i => `'${i.param}': ${i.msg}`).join(' '))
     )
 }
