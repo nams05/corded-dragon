@@ -8,6 +8,7 @@ const tradeType = require('../core/tradeType').tradeType;
 
 const buySecurity = (request, response) =>{
     const buyTrade = new TradeModel({
+        tradeId: request.body.tradeId,
         securityId: request.body.securityId,
         userId: request.body.userId,
         quantity: request.body.quantity,
@@ -59,6 +60,7 @@ const sellSecurity = (request, response) =>{
         if(err) return response.status(500).send("No security to sell");
         else if(userPortfolio.quantity >= request.body.quantity){
             const sellTrade = new TradeModel({
+                tradeId: request.body.tradeId,
                 securityId: request.body.securityId,
                 userId: request.body.userId,
                 quantity: request.body.quantity,
@@ -85,19 +87,20 @@ const sellSecurity = (request, response) =>{
 
 const updateTrade = (request, response) => {
     let updatedTrade = {
+        tradeId: request.body.tradeId,
         securityId: request.body.securityId,
         userId: request.body.userId,
         quantity: request.body.quantity,
         price: request.body.price
     };
-    TradeModel.findOneAndUpdate({_id: request.body.tradeId }, {$set: updatedTrade}, {new: true}, (err, trade) => {
+    TradeModel.findOneAndUpdate({tradeId: request.body.tradeId }, {$set: updatedTrade}, {new: true}, (err, trade) => {
         // Handle any possible database errors
         if (err) return response.status(500).send(err);
         return response.send(trade); //return the updated trade
     });
 }
 const removeTrade = (request, response) => {
-    TradeModel.findOneAndUpdate({_id: request.body.tradeId }, {$set: {softDelete: true}}, {new: true}, (err, trade) => {
+    TradeModel.findOneAndUpdate({tradeId: request.body.tradeId }, {$set: {softDelete: true}}, {new: true}, (err, trade) => {
     // Handle any possible database errors
         if (err) return response.status(500).send(err);
         return response.send(trade);
@@ -107,7 +110,8 @@ const removeTrade = (request, response) => {
 exports.update = (request, response, next) => {
     console.log(request.body);
     request
-    .getValidationResult()  // gets result of validate function 
+    .getValidationResult()  // gets result of validate function
+    //.then(utils.validationHandler()) 
     .then(() => {
         switch(request.body.transactionType){
             case tradeType.BUY:
