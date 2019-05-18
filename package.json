@@ -4,6 +4,7 @@
   "description": "A portfolio tracking API which allows adding/deleting/updating trades and can do basic return calculations",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,9 +23,6 @@
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/nams05/corded-dragon/issues"
-  },
-  "scripts":{
-    "start": "node index.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

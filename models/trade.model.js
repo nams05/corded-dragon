@@ -3,7 +3,7 @@ const config = require('../config/config');
 const tradeType = require('../core/tradeType').tradeType;
 
 const tradeSchema = mongoose.Schema({
-    tradeId: {type: Number, required: true, unique: true},
+    tradeId: {type: Number, unique: true, default: 0},
     securityId: {type: Number, required: true},
     quantity: {type:Number,required: true, min: 1},
     userId: {type: Number, required: true},
