@@ -38,9 +38,11 @@ const updateCurrentPriceForSecurity = (request) => {
 }
 
 const updateUser = (request) => {
-    User.findOneAndUpdate({userId: request.body.userId}, 
-        {$set: {userName: request.body.userName}}, 
-        {upsert: true}, function(){});
+    if(request.body.userName){
+        User.findOneAndUpdate({userId: request.body.userId}, 
+            {$set: {userName: request.body.userName}}, 
+            {upsert: true}, function(){});
+    }
 }
 
 const updateUserPortfolio = (request, response) => {
@@ -87,6 +89,7 @@ const sellSecurity = (request, response) => {
                     if (err) return response.status(500).send(err);
                     else {
                         reduceQuantityInPortfolio(request);
+                        updateCurrentPriceForSecurity(request);
                     }
                     return response.status(200).send(utils.formatTradeResponse(sellTrade));
                 });

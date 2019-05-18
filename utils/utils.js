@@ -11,20 +11,7 @@ exports.validate = function(request, response) {
     }
 }
 
-exports.validationHandler = next => result => {
-    if (result.isEmpty()) return
-    if (!next)
-      return Promise.reject(result.array().map(i => `'${i.param}': ${i.msg}`).join(' '))
-  else
-    return next(
-      Promise.reject(result.array().map(i => `'${i.param}': ${i.msg}`).join(' '))
-    )
-}
-
-exports.formatTradeResponse = function (trade) {
-    let response = new Object();
-    response.status = Messages.success;
-
+const formatTrade = (trade) =>{
     let tradeResponse = new Object();
     tradeResponse.tradeId = trade.tradeId;
     tradeResponse.securityId = trade.securityId;
@@ -33,17 +20,24 @@ exports.formatTradeResponse = function (trade) {
     tradeResponse.createdAt = trade.createdAt;
     tradeResponse.updatedAt = trade.updatedAt;
     tradeResponse.transactionType = trade.transactionType;
-    
-    response.trade = tradeResponse;
+    return tradeResponse;
+}
+
+exports.formatTradeResponse = function (trade) {
+    let response = new Object();
+    response.status = Messages.success;   
+    response.trade = formatTrade(trade);
     return response;
 }
 
 exports.formatHoldingsResponse = function (userPortfolio) {
+    let response = new Object();
+
     let holdingsDict = new Object();
     userPortfolio.forEach((tradeLine) => {
        if(tradeLine.securityId in holdingsDict){
            if(tradeLine.transactionType === tradeType.BUY ){
-                holdingsDict[tradeLine.securityId].averageBuyPrice= (holdingsDict[tradeLine.securityId].buyQuantity*holdingsDict[tradeLine.securityId].price + tradeLine.quantity * tradeLine.price) / (holdingsDict[tradeLine.securityId].buyQuantity+tradeLine.quantity);
+                holdingsDict[tradeLine.securityId].averageBuyPrice= (holdingsDict[tradeLine.securityId].buyQuantity*holdingsDict[tradeLine.securityId].averageBuyPrice + tradeLine.quantity * tradeLine.price) / (holdingsDict[tradeLine.securityId].buyQuantity+tradeLine.quantity);
                 holdingsDict[tradeLine.securityId].buyQuantity += tradeLine.quantity; 
                 holdingsDict[tradeLine.securityId].quantity += tradeLine.quantity;
             }
@@ -53,17 +47,27 @@ exports.formatHoldingsResponse = function (userPortfolio) {
        }
        else{
            if(tradeLine.transactionType === tradeType.BUY){
-                holdingsDict[tradeLine.securityId] = {buyQuantity:tradeLine.quantity, quantity:tradeLine.quantity, price:tradeLine.price};
-           }
-           else{
-                holdingsDict[tradeLine.securityId] = {buyQuantity:0, quantity:tradeLine.quantity, price: tradeLine.price};
-           }
-           
+                holdingsDict[tradeLine.securityId] = {buyQuantity: tradeLine.quantity, quantity: tradeLine.quantity, averageBuyPrice: tradeLine.price};
+           }          
        }
     });
-    return holdingsDict;
+    response.status = Messages.success;
+    response.holdings = holdingsDict;
+    return response;
 }
 
+exports.formatReturnResponse = (userPortfolio) => {
+    let response = new Object();
+    let holdings = this.formatHoldingsResponse(userPortfolio).holdings;
+    let returns = 0;
+    for(let security in holdings){   
+        returns += (100 - holdings[security].averageBuyPrice) * holdings[security].quantity;
+    }
+    
+    response.status = Messages.success;
+    response.returns = returns;
+    return response;
+}
 
 exports.formatPortfolio = function (userPortfolio, user) {
     let response = new Object();
@@ -74,9 +78,9 @@ exports.formatPortfolio = function (userPortfolio, user) {
     let portfolio = new Object();    
     userPortfolio.forEach((tradeLine) => {
        if(tradeLine.securityId in portfolio){
-            portfolio[tradeLine.securityId].push(tradeLine)
+            portfolio[tradeLine.securityId].push(formatTrade(tradeLine));
        } else{
-            portfolio[tradeLine.securityId] = [tradeLine];
+            portfolio[tradeLine.securityId] = [formatTrade(tradeLine)];
        }
     });
     response.portfolio = portfolio;
