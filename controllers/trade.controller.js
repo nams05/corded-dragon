@@ -32,15 +32,17 @@ const buySecurity = (request, response) =>{
 }
 
 const updateCurrentPriceForSecurity = (request) => {
-    Security.findOneAndUpdate({securityId: request.body.securityId}, 
-        {$set: {lastTradedPrice: request.body.price, symbol: request.body.securitySymbol, type: request.body.securityType, name: request.body.securityName}}, 
-        {upsert: true, returnNewDocument: true}, function(err, record){
-            if (err){
-                console.log(err);
-                return;
-            }
-            console.log("Security updated:" + record);
+    if(request.body.securityName && request.body.securitySymbol){
+        Security.findOneAndUpdate({securityId: request.body.securityId}, 
+            {$set: {lastTradedPrice: request.body.price, symbol: request.body.securitySymbol, type: request.body.securityType, name: request.body.securityName}}, 
+            {upsert: true, returnNewDocument: true}, function(err, record){
+                if (err){
+                    console.log(err);
+                    return;
+                }
+                console.log("Security updated:" + record);
         });
+    }
 }
 
 const updateUser = (request) => {

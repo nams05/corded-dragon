@@ -1,5 +1,5 @@
 # Portfolio Management API
-It is a portfolio tracking API built on nodejs, express and mongoDb.
+It is a portfolio management API built on nodejs, express and mongoDb.
 The API allows adding/deleting/updating trades and can do basic return calculations.
 
 ## Installation

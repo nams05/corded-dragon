@@ -1,5 +1,5 @@
 {
-  "name": "corded-dragon",
+  "name": "portfolio_management_api",
   "version": "1.0.0",
   "description": "A portfolio tracking API which allows adding/deleting/updating trades and can do basic return calculations",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nams05/corded-dragon.git"
+    "url": "git+https://gitlab.com/nams05/portfolio-tracker.git"
   },
   "keywords": [
     "portfolio",
@@ -22,7 +22,7 @@
   "author": "Namrata Gupta",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/nams05/corded-dragon/issues"
+    "url": "https://gitlab.com/nams05/portfolio-tracker/issues"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -30,5 +30,5 @@
     "express-validator": "^5.3.1",
     "mongoose": "^5.5.7"
   },
-  "homepage": "https://github.com/nams05/corded-dragon#readme"
+  "homepage": "https://gitlab.com/nams05/portfolio-tracker#readme"
 }
