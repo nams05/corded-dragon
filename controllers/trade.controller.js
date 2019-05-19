@@ -32,16 +32,28 @@ const buySecurity = (request, response) =>{
 }
 
 const updateCurrentPriceForSecurity = (request) => {
-    Security.findOneAndUpdate({securityId: request.body.securityId, symbol: request.body.securitySymbol, type: request.body.securityType}, 
-        {$set: {lastTradedPrice: request.body.lastTradedPrice}}, 
-        {upsert: true}, function(){});
+    Security.findOneAndUpdate({securityId: request.body.securityId}, 
+        {$set: {lastTradedPrice: request.body.price, symbol: request.body.securitySymbol, type: request.body.securityType, name: request.body.securityName}}, 
+        {upsert: true, returnNewDocument: true}, function(err, record){
+            if (err){
+                console.log(err);
+                return;
+            }
+            console.log("Security updated:" + record);
+        });
 }
 
 const updateUser = (request) => {
     if(request.body.userName){
         User.findOneAndUpdate({userId: request.body.userId}, 
             {$set: {userName: request.body.userName}}, 
-            {upsert: true}, function(){});
+            {upsert: true, returnNewDocument: true}, function(err, record){
+                if (err){
+                    console.log(err);
+                    return;
+                }
+                console.log("User updated:" + record);
+            });
     }
 }
 
@@ -130,7 +142,7 @@ const removeTrade = (request, response) => {
 }
 // add, update or delete a trade
 exports.handleTrade = (request, response) => {
-    console.log(request.body);
+    console.log("Request body:", request.body);
     if (!utils.validate(request, response)){
         return response.status(400).send("Bad Request");
     };
