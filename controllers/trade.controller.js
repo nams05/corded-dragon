@@ -43,6 +43,18 @@ const updateCurrentPriceForSecurity = (request) => {
                 console.log("Security updated:" + record);
         });
     }
+    else{
+        Security.findOneAndUpdate({securityId: request.body.securityId}, 
+            {$set: {lastTradedPrice: request.body.price}}, 
+            {upsert: true, returnNewDocument: true}, function(err, record){
+                if (err){
+                    console.log(err);
+                    return;
+                }
+                console.log("Security updated:" + record);
+        });
+
+    }
 }
 
 const updateUser = (request) => {
