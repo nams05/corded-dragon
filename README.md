@@ -1,6 +1,6 @@
 # Portfolio Management API
 It is a portfolio management API built on nodejs, express and mongoDb.
-The API allows adding/deleting/updating trades and can do basic return calculations.
+The API allows adding/deleting/updating trades and can do basic returns calculations.
 
 ## Installation
 Install nodejs and mongodb. Start MongoDb and node server. 
@@ -169,6 +169,6 @@ $ Returns a Response: JSON
     }
 ```
 
-## To be Noted
-1. User needs to send the securityName and securitySymbol for the 1st trade. This is because            currently our API is fetching securityName and securitySymbol from the trade itself. 
-2. Username is optional while trading. It works the same way as point 1.
+## Additional Features
+
+Security name, security symbol and username will be automatically updated (if not present already), if passed in updateTrade API
