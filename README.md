@@ -14,7 +14,7 @@ $ npm start
 Set the header - Content-Type: application/json
 1. Buy/Sell a securtiy
 ```sh
-$ Send a POST request to https://35.238.38.7:8080/updateTrade
+$ Send a POST request to http://35.238.38.7:8080/updateTrade
 $ Request: JSON
     {
         "securityId": 100,
@@ -41,7 +41,7 @@ $ Returns a Respose:JSON
 ```
 2. Update a trade
 ```sh
-$ Send a POST request to https://35.238.38.7:8080/updateTrade
+$ Send a POST request to http://35.238.38.7:8080/updateTrade
 $ Request: JSON
     {
         "tradeId": 1,
@@ -68,7 +68,7 @@ $ Returns a Response: JSON
 
 3. Delete a trade
 ```sh
-$ Send a POST request to https://35.238.38.7:8080/updateTrade
+$ Send a POST request to http://35.238.38.7:8080/updateTrade
 $ Request: JSON
     {
         "tradeId": 1,
@@ -91,7 +91,7 @@ $ Returns a Response: JSON
 
 4. Fetch user portfolio with userId: 1000
 ```sh
-$ Send a GET request to https://35.238.38.7:8080/fetchPortfolio/1000
+$ Send a GET request to http://35.238.38.7:8080/fetchPortfolio/1000
 $ Returns a Response: JSON
     {
         "status": "success",
@@ -139,7 +139,7 @@ $ Returns a Response: JSON
 ```
 5. Fetch user holdings with userId: 1000
 ```sh
-$ Send a GET request to https://35.238.38.7:8080/fetchHoldings/1000/
+$ Send a GET request to http://35.238.38.7:8080/fetchHoldings/1000/
 $ Returns a Response: JSON
     {
         "status": "success",
@@ -159,7 +159,7 @@ $ Returns a Response: JSON
 
 6. Fetch user returns with userId: 1000
 ```sh
-$ Send a GET request to https://35.238.38.7:8080/fetchReturns/1000/
+$ Send a GET request to http://35.238.38.7:8080/fetchReturns/1000/
 $ Returns a Response: JSON
     {
         "status": "success",
