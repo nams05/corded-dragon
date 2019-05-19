@@ -1,12 +1,12 @@
-# Corded-dragon
-Corded-dragon is a portfolio tracking API built on nodejs, express and mongoDb.
+# Portfolio Management API
+It is a portfolio tracking API built on nodejs, express and mongoDb.
 The API allows adding/deleting/updating trades and can do basic return calculations.
 
 ## Installation
 Install nodejs and mongodb. Start MongoDb and node server. 
 ```sh
-$ git clone git@github.com:nams05/corded-dragon.git
-$ cd corded-dragon
+$ git clone git@gitlab.com:nams05/portfolio-tracker.git
+$ cd portfolio-tracker
 $ npm install
 $ npm start
 ```
@@ -19,7 +19,7 @@ $ Request: JSON
     {
         "securityId": 100,
         "securityName": "NamrataG",
-	    "securitySymbol": "NG",
+        "securitySymbol": "NG",
         "userId": 1000,
         "quantity": 1,
         "price":60,
@@ -172,5 +172,3 @@ $ Returns a Response: JSON
 ## To be Noted
 1. User needs to send the securityName and securitySymbol for the 1st trade. This is because            currently our API is fetching securityName and securitySymbol from the trade itself. 
 2. Username is optional while trading. It works the same way as point 1.
-
-3. 
