@@ -59,7 +59,7 @@ const convertListToHashtable = (securities) => {
 
 exports.validate = function(request, response) {
     var body = request.body;
-    if (!body.securityId || !body.userId || !body.price || !body.quantity || !body.transactionType) {
+    if ((!body.securityId || !body.userId || !body.price || !body.quantity) && !body.transactionType) {
         return false;
     } else {
         return true;
