@@ -172,5 +172,3 @@ $ Returns a Response: JSON
 ## To be Noted
 1. User needs to send the securityName and securitySymbol for the 1st trade. This is because            currently our API is fetching securityName and securitySymbol from the trade itself. 
 2. Username is optional while trading. It works the same way as point 1.
-
-3. 
